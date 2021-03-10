@@ -24,6 +24,11 @@ const pusher = new Pusher({
 /*
  * Define post route for creating new reviews
  */
+
+app.get("/", (req, res) => {
+  res.status(200).send("working");
+});
+
 app.post("/alert", (req, res) => {
   pusher.trigger("alerts", "info", { info: req.body });
   res.status(200).send();
@@ -32,7 +37,7 @@ app.post("/alert", (req, res) => {
 /*
  * Run app
  */
-const port = 5000;
+const port = 80;
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
 });
