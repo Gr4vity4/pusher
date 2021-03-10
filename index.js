@@ -25,13 +25,13 @@ app
   .use(bodyParser.json())
   .use(
     bodyParser.urlencoded({
-      extended: false,
+      extended: true,
     })
   )
   .get("/", (req, res) => res.send(`Node.js running on port : ${PORT}`))
   .post("/alert", function (req, res) {
     console.log(">>> /alert");
-    pusher.trigger("alerts", "info", { info: req.body });
+    pusher.trigger("alerts", "restaurant", { message: req.body });
     res.status(200).send();
   })
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
