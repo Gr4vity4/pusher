@@ -6,7 +6,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 9999;
 const bodyParser = require("body-parser");
-
+const cors = require("cors");
 /*
  * Initialise Pusher
  */
@@ -18,6 +18,7 @@ const pusher = new Pusher({
   cluster: "ap1",
 });
 
+app.use(cors({ credentials: true, origin: true }));
 /*
  * Run app
  */
