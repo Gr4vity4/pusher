@@ -3,12 +3,11 @@
  * Initialise Express
  */
 const express = require("express");
-const path = require("path");
 const app = express();
+const path = require("path");
+const PORT = process.env.PORT || 9999;
+const request = require("request");
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname)));
 
 /*
  * Initialise Pusher
@@ -22,22 +21,19 @@ const pusher = new Pusher({
 });
 
 /*
- * Define post route for creating new reviews
- */
-
-app.get("/", (req, res) => {
-  res.send("working");
-});
-
-app.post("/alert", (req, res) => {
-  pusher.trigger("alerts", "info", { info: req.body });
-  res.status(200).send();
-});
-
-/*
  * Run app
  */
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App listening on port ${port}!`);
-});
+app
+  .use(bodyParser.json())
+  .use(
+    bodyParser.urlencoded({
+      extended: false,
+    })
+  )
+  .get("/", (req, res) => res.send(`Node.js running on port : ${PORT}`))
+  .post("/alert", function (req, res) {
+    console.log(">>> /alert");
+    pusher.trigger("alerts", "info", { info: req.body });
+    res.status(200).send();
+  })
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
