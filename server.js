@@ -26,7 +26,7 @@ const pusher = new Pusher({
  */
 
 app.get("/", (req, res) => {
-  res.status(200).send("working");
+  res.send("working");
 });
 
 app.post("/alert", (req, res) => {
@@ -37,7 +37,7 @@ app.post("/alert", (req, res) => {
 /*
  * Run app
  */
-const port = 80;
+const port = 3000;
 app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
 });
